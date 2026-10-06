@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>আমি কেমন? 🇧🇩 - বাংলাদেশি Fun Personality Quiz</title>
+    <!-- Google Fonts: Hind Siliguri for beautiful Bengali typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070a13;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --bd-green: #00a86b;
+            --bd-green-glow: rgba(0, 168, 107, 0.4);
+            --bd-red: #ff3b5c;
+            --bd-red-glow: rgba(255, 59, 92, 0.4);
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Hind Siliguri', 'Outfit', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 168, 107, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 59, 92, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.8) 0%, transparent 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            overflow-x: hidden;
+            position: relative;
+            padding: 16px;
+        }
+
+        /* Animated Ambient Floating Emojis */
+        .ambient-emoji {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.25;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-30px) rotate(15deg); }
+        }
+
+        /* Glass Container Styling */
+        .app-container {
+            width: 100%;
+            max-width: 680px;
+            z-index: 10;
+            position: relative;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 28px 22px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+        }
+
+        /* Audio Control Button */
+        .audio-toggle {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 8px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: var(--transition);
+        }
+        .audio-toggle:hover {
+            border-color: var(--bd-green);
+            transform: scale(1.05);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-bd-green {
+            background: linear-gradient(135deg, #00f298 0%, #00a86b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-bd-red {
+            background: linear-gradient(135deg, #ff6b81 0%, #ff3b5c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gold {
+            background: linear-gradient(135deg, #ffe066 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            text-decoration: none;
+            outline: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00a86b 0%, #007d50 100%);
+            color: #fff;
+            box-shadow: 0 8px 25px var(--bd-green-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px var(--bd-green-glow);
+            background: linear-gradient(135deg, #00c47d 0%, #008f5c 100%);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            border: 1px solid var(--border-glass);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.3);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(243, 156, 18, 0.5);
+        }
+
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 168, 107, 0.15);
+            border: 1px solid rgba(0, 168, 107, 0.4);
+            color: #00f298;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .form-control:focus {
+            border-color: var(--bd-green);
+            box-shadow: 0 0 15px var(--bd-green-glow);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        select.form-control option {
+            background-color: #0f172a;
+            color: #fff;
+        }
+        .error-msg {
+            color: var(--bd-red);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Quiz Section Styles */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 10%;
+            background: linear-gradient(90deg, var(--bd-green) 0%, #00f298 100%);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+        .question-card {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .option-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-glass);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            text-align: left;
+        }
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateX(4px);
+        }
+        .option-card.selected {
+            background: rgba(0, 168, 107, 0.15);
+            border-color: var(--bd-green);
+            box-shadow: 0 0 20px var(--bd-green-glow);
+            transform: scale(1.02);
+        }
+        .option-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: var(--transition);
+        }
+        .option-card.selected .option-check {
+            background: var(--bd-green);
+            border-color: var(--bd-green);
+            color: #fff;
+        }
+
+        /* Loading/Analyzing Section */
+        .analyzer-box {
+            text-align: center;
+            padding: 40px 10px;
+        }
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid var(--bd-green);
+            border-right: 5px solid var(--bd-red);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 25px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .analyze-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .analyze-percent {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #00f298;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Result Section */
+        .result-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .result-title-badge {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            display: inline-block;
+            width: 100%;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 480px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .info-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-glass);
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            text-align: left;
+        }
+        .info-pill span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+        .info-pill strong {
+            font-size: 1rem;
+            color: #fff;
+        }
+
+        .motivational-card {
+            background: linear-gradient(135deg, rgba(0, 168, 107, 0.1) 0%, rgba(255, 59, 92, 0.1) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: left;
+            position: relative;
+        }
+        .motivational-card h3 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .motivational-card p {
+            line-height: 1.7;
+            font-size: 0.98rem;
+            color: #e2e8f0;
+        }
+
+        /* Vibe Score Stats */
+        .vibe-stat-row {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+        .vibe-stat-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .vibe-bar-bg {
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .vibe-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        .funny-line-box {
+            background: rgba(255, 215, 0, 0.08);
+            border: 1px dashed var(--gold);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin: 20px 0;
+            font-weight: 600;
+            color: #ffea79;
+            text-align: center;
+            font-size: 1.05rem;
+        }
+
+        /* Certificate Preview Section */
+        .certificate-preview-container {
+            margin-top: 30px;
+            background: rgba(10, 15, 28, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.15);
+            text-align: center;
+        }
+        .cert-inner-border {
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            padding: 20px 14px;
+            border-radius: var(--radius-md);
+            position: relative;
+        }
+        .cert-seal {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold) 0%, #b8860b 100%);
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.65rem;
+            margin: 15px auto;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            line-height: 1.1;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-card {
+            background: #0f172a;
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            max-width: 500px;
+            width: 100%;
+            color: var(--text-main);
+            text-align: left;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Hidden Canvas for High-Res Certificate Generation */
+        #cert-canvas {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Floating Decorative Elements -->
+    <div class="ambient-emoji" style="top: 10%; left: 8%;">🇧🇩</div>
+    <div class="ambient-emoji" style="top: 25%; right: 10%; animation-delay: -2s;">✨</div>
+    <div class="ambient-emoji" style="top: 65%; left: 5%; animation-delay: -4s;">😎</div>
+    <div class="ambient-emoji" style="top: 80%; right: 8%; animation-delay: -1s;">🔥</div>
+    <div class="ambient-emoji" style="top: 45%; right: 5%; animation-delay: -3s;">❤️</div>
+
+    <!-- Audio Toggle Button -->
+    <button class="audio-toggle" id="audioToggleBtn" onclick="toggleAudio()">
+        <span id="audioIcon">🔇</span> <span id="audioText">সাউন্ড: বন্ধ</span>
+    </button>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        <!-- 1. LANDING / HERO SECTION -->
+        <div id="heroSection" class="section glass-card active" style="text-align: center;">
+            <div class="hero-badge">কয়েক মিনিট • কিছু মজার প্রশ্ন • একটি বিশেষ Result 🎉</div>
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">🇧🇩</div>
+            <h1 class="hero-title text-gradient">আমি কেমন?</h1>
+            <p class="hero-subtitle">
+                কিছু সহজ প্রশ্নের উত্তর দিন,<br>
+                আর জানুন নিজের সম্পর্কে একটি মজার ও সুন্দর বিশ্লেষণ!
+            </p>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                <button class="btn btn-primary" onclick="goToSection('userInfoSection')">
+                    🚀 শুরু করুন
+                </button>
+                <button class="btn btn-secondary" onclick="openModal()">
+                    ℹ️ কীভাবে কাজ করে
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. USER INFORMATION SECTION -->
+        <div id="userInfoSection" class="section glass-card">
+            <h2 style="font-size: 1.5rem; margin-bottom: 20px; text-align: center;">
+                চলুন, প্রথমে আপনার সম্পর্কে একটু জানি 😊
+            </h2>
+
+            <div class="form-group">
+                <label for="userName">আপনার নাম কী?</label>
+                <input type="text" id="userName" class="form-control" placeholder="যেমন: নাইম অথবা রহিমা">
+                <div class="error-msg" id="nameError">অনুগ্রহ করে আপনার নাম লিখুন।</div>
+            </div>
+
+            <div class="form-group">
+                <label for="userAge">আপনার বয়স কত?</label>
+                <input type="number" id="userAge" class="form-control" placeholder="যেমন: ২২" min="10" max="100">
+                <div class="error-msg" id="ageError">অনুগ্রহ করে একটি সঠিক বয়স লিখুন।</div>
+            </div>
+
+            <div class="form-group">
+                <label for="userDistrict">আপনার জেলা কোনটি?</label>
+                <select id="userDistrict" class="form-control">
+                    <option value="">-- জেলা নির্বাচন করুন --</option>
+                </select>
+                <div class="error-msg" id="districtError">অনুগ্রহ করে আপনার জেলা নির্বাচন করুন।</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="form-group">
+                    <label for="userSSC">SSC ফলাফল (GPA)</label>
+                    <input type="number" id="userSSC" class="form-control" step="0.01" min="1.0" max="5.0" placeholder="যেমন: 5.00">
+                    <div class="error-msg" id="sscError">সঠিক GPA দিন।</div>
+                </div>
+                <div class="form-group">
+                    <label for="userHSC">HSC ফলাফল (GPA)</label>
+                    <input type="number" id="userHSC" class="form-control" step="0.01" min="1.0" max="5.0" placeholder="যেমন: 4.80">
+                    <div class="error-msg" id="hscError">সঠিক GPA দিন।</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="margin-top: 10px;" onclick="validateAndStartQuiz()">
+                কুইজ শুরু করুন 🎯
+            </button>
+        </div>
+
+        <!-- 3. QUIZ SECTION -->
+        <div id="quizSection" class="section glass-card">
+            <div class="quiz-header">
+                <span id="questionProgressText">প্রশ্ন ১ / ১০</span>
+                <span id="questionPercentText" class="text-bd-green">১০%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+
+            <div class="question-card" id="questionText">
+                -- প্রশ্ন লোড হচ্ছে --
+            </div>
+
+            <div class="options-grid" id="optionsContainer">
+                <!-- Dynamically Rendered Answer Options -->
+            </div>
+
+            <button class="btn btn-primary" id="nextQuestionBtn" onclick="submitAnswer()" disabled>
+                পরের প্রশ্ন →
+            </button>
+        </div>
+
+        <!-- 4. ANALYZING SCREEN -->
+        <div id="analyzingSection" class="section glass-card">
+            <div class="analyzer-box">
+                <div class="spinner"></div>
+                <div class="analyze-text">আপনার উত্তরগুলো বিশ্লেষণ করা হচ্ছে...</div>
+                <div style="font-size: 0.95rem; color: var(--text-muted); margin-top: 5px;">Analyzing AI Personality Engine</div>
+                <div class="analyze-percent" id="analyzePercent">0%</div>
+            </div>
+        </div>
+
+        <!-- 5. RESULT SECTION -->
+        <div id="resultSection" class="section glass-card">
+            <div class="result-header">
+                <div class="hero-badge">✨ আপনার Result প্রস্তুত! ✨</div>
+                <p id="resultUserGreeting" style="font-size: 1.1rem; color: var(--text-muted);">
+                    -- আপনার personality analysis complete! --
+                </p>
+                <div class="result-title-badge text-gold" id="resultTitle">
+                    👑 আপনি একজন ভবিষ্যৎ নেতা
+                </div>
+                <p id="resultDescription" style="line-height: 1.6; font-size: 1.05rem; margin-top: 10px;">
+                    -- বিবরণ --
+                </p>
+            </div>
+
+            <!-- Profile Info Grid -->
+            <div class="result-grid">
+                <div class="info-pill">
+                    <span>👤 নাম:</span>
+                    <strong id="resName">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>🎂 বয়স:</span>
+                    <strong id="resAge">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>📍 জেলা:</span>
+                    <strong id="resDistrict">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>🎓 রেজাল্ট (SSC / HSC):</span>
+                    <strong id="resGPA">--</strong>
+                </div>
+            </div>
+
+            <!-- Detailed Traits Grid -->
+            <div class="result-grid" style="margin-bottom: 24px;">
+                <div class="info-pill">
+                    <span>🧠 আপনার ব্যক্তিত্ব:</span>
+                    <strong id="resTraits">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>💼 সম্ভাব্য ক্যারিয়ার:</span>
+                    <strong id="resCareer">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>🏙️ মানানসই শহর:</span>
+                    <strong id="resCity">--</strong>
+                </div>
+                <div class="info-pill">
+                    <span>❤️ সম্পর্কের ক্ষেত্রে:</span>
+                    <strong id="resRelation">--</strong>
+                </div>
+            </div>
+
+            <!-- Motivational Personalized Message Card -->
+            <div class="motivational-card">
+                <h3>💌 <span id="motoTitle">আপনার জন্য একটি বিশেষ কথা</span></h3>
+                <p id="motoText">-- অনুপ্রেরণামূলক বার্তা --</p>
+            </div>
+
+            <!-- Vibe Score Breakdown -->
+            <div style="margin-bottom: 24px; text-align: left;">
+                <h3 style="font-size: 1.2rem; margin-bottom: 15px;" class="text-bd-green">
+                    ✨ আপনার Vibe Breakdown (Score: <span id="totalVibeScore">90</span>/100)
+                </h3>
+                <div id="vibeStatsContainer">
+                    <!-- Vibe Stat Bars Rendered Here -->
+                </div>
+            </div>
+
+            <!-- Dynamic Funny Quote Box -->
+            <div class="funny-line-box" id="funnyLineText">
+                "আপনার brain-এ ideas-এর traffic jam চলছে! 🎨😂"
+            </div>
+
+            <!-- CERTIFICATE SECTION PREVIEW -->
+            <div class="certificate-preview-container">
+                <div class="cert-inner-border">
+                    <div style="font-size: 0.8rem; color: var(--gold); letter-spacing: 2px;">🇧🇩 আমি কেমন?</div>
+                    <div style="font-size: 1.3rem; font-weight: 800; margin: 6px 0;" class="text-gradient">
+                        VERIFIED PERSONALITY CERTIFICATE
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">এই সার্টিফিকেটটি সম্মানপ্রদর্শনপূর্বক প্রদান করা হলো</div>
+
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #00f298; margin: 12px 0;" id="certName">
+                        -- নাম --
+                    </div>
+
+                    <div style="font-size: 0.9rem; color: var(--text-muted);">আপনার ব্যক্তিত্বের প্রধান পরিচয়:</div>
+                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--gold); margin-top: 4px;" id="certTitle">
+                        -- রেজাল্ট টাইটেল --
+                    </div>
+
+                    <div class="cert-seal">
+                        <span>VERIFIED</span>
+                        <span style="font-size: 0.5rem; opacity: 0.8;">FUN QUIZ</span>
+                    </div>
+
+                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+                        জেলা: <span id="certDistrict" style="color: #fff;">--</span> | Vibe Score: <span id="certVibe" style="color: #00f298;">--</span>/100
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+                <button class="btn btn-gold" onclick="downloadCertificate()">
+                    📥 Certificate Download করুন (PNG)
+                </button>
+                <button class="btn btn-primary" onclick="shareResult()">
+                    📤 Result Share করুন
+                </button>
+                <button class="btn btn-secondary" onclick="restartQuiz()">
+                    🔄 আবার খেলুন
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Modal -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="modal-card">
+            <h2 style="font-size: 1.4rem; margin-bottom: 14px;" class="text-bd-green">
+                ℹ️ কুইজটি কীভাবে কাজ করে?
+            </h2>
+            <p style="font-size: 0.98rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 16px;">
+                আপনাকে প্রথমে কিছু সাধারণ তথ্য দিতে হবে। এরপর ১০টি সহজ ও মজার প্রশ্নের উত্তর দিতে হবে। আপনার পছন্দগুলোর ওপর ভিত্তি করে কুইজের অ্যালগরিদম আপনার ব্যক্তিত্বের প্রধান দিকটি বিশ্লেষণ করবে।
+                শেষে আপনি একটি personalized বিশ্লেষণ এবং ডাউনলোডযোগ্য সার্টিফিকেট পাবেন!
+            </p>
+            <div style="background: rgba(255, 59, 92, 0.1); border-left: 3px solid var(--bd-red); padding: 10px 14px; border-radius: 4px; font-size: 0.85rem; color: #ff8fa3; margin-bottom: 20px;">
+                <strong>⚠️ সতর্কতা / Disclaimer:</strong><br>
+                এই ফলাফল শুধুমাত্র বিনোদনের উদ্দেশ্যে তৈরি। এটি কোনো বৈজ্ঞানিক বা মানসিক চিকিৎসা সংক্রান্ত মূল্যায়ন নয়।
+            </div>
+            <button class="btn btn-secondary" onclick="closeModal()">ঠিক আছে, বুঝেছি 👍</button>
+        </div>
+    </div>
+
+    <!-- Hidden Offscreen Canvas for Exporting High-Res Certificate -->
+    <canvas id="cert-canvas" width="1000" height="700"></canvas>
+
+    <script>
+        /* ==========================================================================
+           AUDIO ENGINE (Web Audio API Synthesizer - Zero External Files)
+           ========================================================================== */
+        let audioEnabled = false;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    audioCtx = new AudioContext();
+                }
+            }
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            const icon = document.getElementById('audioIcon');
+            const text = document.getElementById('audioText');
+            if (audioEnabled) {
+                initAudio();
+                if (audioCtx && audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                icon.textContent = '🔊';
+                text.textContent = 'সাউন্ড: চালু';
+                playClickSound();
+            } else {
+                icon.textContent = '🔇';
+                text.textContent = 'সাউন্ড: বন্ধ';
+            }
+        }
+
+        function playClickSound() {
+            if (!audioEnabled || !audioCtx) return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch (e) { console.error(e); }
+        }
+
+        function playSuccessSound() {
+            if (!audioEnabled || !audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                osc.frequency.setValueAtTime(1046.50, now + 0.3); // C6
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(now + 0.6);
+            } catch (e) { console.error(e); }
+        }
+
+        /* ==========================================================================
+           DATA & DISTRICTS (All 64 Districts of Bangladesh)
+           ========================================================================== */
+        const districtsBD = [
+            "বাগেরহাট", "বান্দরবান", "বরগুনা", "বরিশাল", "ভোলা", "বগুড়া", "ব্রাহ্মণবাড়িয়া", "চাঁদপুর",
+            "চাঁপাইনবাবগঞ্জ", "চট্টগ্রাম", "চুয়াডাঙ্গা", "কুমিল্লা", "কক্সবাজার", "ঢাকা", "দিনাজপুর", "ফরিদপুর",
+            "ফেনী", "গাইবান্ধা", "গাজীপুর", "গোপালগঞ্জ", "হবিগঞ্জ", "জামালপুর", "যশোর", "ঝালকাঠি",
+            "ঝিনাইদহ", "জয়পুরহাট", "খাগড়াছড়ি", "খুলনা", "কিশোরগঞ্জ", "কুড়িগ্রাম", "কুষ্টিয়া", "লক্ষ্মীপুর",
+            "লালমনিরহাট", "মাদারীপুর", "মাগুরা", "মানিকগঞ্জ", "মেহেরপুর", "মৌলভীবাজার", "মুন্সীগঞ্জ", "ময়মনসিংহ",
+            "নওগাঁ", "নড়াইল", "নারায়ণগঞ্জ", "নরসিংদী", "নাটোর", "নেত্রকোনা", "নীলফামারী", "নোয়াখালী",
+            "পাবনা", "পঞ্চগড়", "পটুয়াখালী", "পিরোজপুর", "রাজবাড়ী", "রাজশাহী", "রাঙ্গামাটি", "রংপুর",
+            "সাতক্ষীরা", "শরীয়তপুর", "শেরপুর", "সিরাজগঞ্জ", "সুনামগঞ্জ", "সিলেট", "টাঙ্গাইল", "ঠাকুরগাঁও"
+        ];
+
+        function populateDistricts() {
+            const select = document.getElementById('userDistrict');
+            districtsBD.forEach(dist => {
+                const opt = document.createElement('option');
+                opt.value = dist;
+                opt.textContent = dist;
+                select.appendChild(opt);
+            });
+        }
+
+        /* ==========================================================================
+           QUIZ QUESTIONS (Bangla with 8 personality categories)
+           Categories: leadership, thinker, creative, explorer, entrepreneur, caring, energetic, dreamer
+           ========================================================================== */
+        const questions = [
+            {
+                q: "১. অবসর সময়ে আপনি কী করতে সবচেয়ে বেশি পছন্দ করেন?",
+                options: [
+                    { text: "A. বাসায় নিজের মতো বই পড়ে বা চিন্তা করে সময় কাটাতে", scores: { thinker: 3, creative: 1 } },
+                    { text: "B. বন্ধুদের সঙ্গে আড্ডা ও হইচই করতে", scores: { energetic: 3, caring: 1 } },
+                    { text: "C. নতুন কোনো জায়গায় ঘুরতে বা এক্সপ্লোর করতে", scores: { explorer: 3, dreamer: 1 } },
+                    { text: "D. নতুন কোনো স্কিল শিখতে বা আইডিয়া নিয়ে কাজ করতে", scores: { entrepreneur: 3, leadership: 1 } }
+                ]
+            },
+            {
+                q: "২. কেউ আপনার সমালোচনা বা ভুল ধরিয়ে দিলে আপনি সাধারণত কী করেন?",
+                options: [
+                    { text: "A. শান্তভাবে লজিক দিয়ে বিষয়টি বিশ্লেষণ করি", scores: { thinker: 3, leadership: 1 } },
+                    { text: "B. নিজের ভুল থাকলে তা শুধরে নেওয়ার চেষ্টা করি", scores: { caring: 3, thinker: 1 } },
+                    { text: "C. বেশি পাত্তা না দিয়ে নিজের ট্র্যাকে চলি", scores: { energetic: 3, dreamer: 1 } },
+                    { text: "D. নতুন দৃষ্টিকোণ হিসেবে ভেবে কাজে লাগাই", scores: { creative: 3, entrepreneur: 1 } }
+                ]
+            },
+            {
+                q: "৩. আপনার স্বপ্নের জীবন কোনটি?",
+                options: [
+                    { text: "A. নিজের বড় একটি স্টার্টআপ বা সফল ব্যবসা থাকা", scores: { entrepreneur: 3, leadership: 1 } },
+                    { text: "B. নতুন নতুন দেশ ও সংস্কৃতি ঘুরে বেড়ানো", scores: { explorer: 3, dreamer: 1 } },
+                    { text: "C. পরিবার ও প্রিয় মানুষদের নিয়ে সুখে শান্তিতে থাকা", scores: { caring: 3, energetic: 1 } },
+                    { text: "D. নিজের কোনো বিশেষ শিল্প বা আইডিয়া বিশ্বজুড়ে ছড়ানো", scores: { creative: 3, dreamer: 1 } }
+                ]
+            },
+            {
+                q: "৪. কোনো কঠিন বা হঠাৎ প্রেসারের পরিস্থিতিতে আপনি কীভাবে সিদ্ধান্ত নেন?",
+                options: [
+                    { text: "A. মাথা ঠান্ডা রেখে ধাপে ধাপে প্ল্যান করি", scores: { thinker: 3, leadership: 1 } },
+                    { text: "B. টিমের নেতৃত্ব নিই এবং সবাইকে গাইড করি", scores: { leadership: 3, entrepreneur: 1 } },
+                    { text: "C. আউট অব দ্য বক্স কোনো ইউনিক বুদ্ধি বের করি", scores: { creative: 3, explorer: 1 } },
+                    { text: "D. কাছের মানুষের থেকে মতামত নিই", scores: { caring: 3, energetic: 1 } }
+                ]
+            },
+            {
+                q: "৫. বন্ধুরা আপনাকে আড্ডায় কোন ধরনের মানুষ হিসেবে দেখে?",
+                options: [
+                    { text: "A. যে সবাইকে হাসায় ও মাতিয়ে রাখে", scores: { energetic: 3, creative: 1 } },
+                    { text: "B. যে সব সমস্যার গভীর পরামর্শ বা বুদ্ধি দিতে পারে", scores: { thinker: 3, leadership: 1 } },
+                    { text: "C. যে সবসময় বিপদে আগে এগিয়ে আসে", scores: { caring: 3, leadership: 1 } },
+                    { text: "D. যে বড় বড় স্বপ্নের কথা বা ইউনিক প্ল্যান সাজায়", scores: { dreamer: 3, entrepreneur: 1 } }
+                ]
+            },
+            {
+                q: "৬. হঠাৎ লটারিতে ১ লাখ টাকা পেলে আপনি কী করবেন?",
+                options: [
+                    { text: "A. নতুন কোনো ব্যবসা বা ইনভেস্টমেন্টে কাজে লাগাব", scores: { entrepreneur: 3, leadership: 1 } },
+                    { text: "B. পছন্দের কোথাও ট্যুর দিয়ে দেব", scores: { explorer: 3, energetic: 1 } },
+                    { text: "C. পরিবারের জন্য উপহার ও সেভিংস করব", scores: { caring: 3, thinker: 1 } },
+                    { text: "D. গ্যাজেট কিনে নতুন কোনো ক্রিয়েটিভ কাজ শুরু করব", scores: { creative: 3, dreamer: 1 } }
+                ]
+            },
+            {
+                q: "৭. আপনার মতে জীবনের সবচেয়ে গুরুত্বপূর্ণ শক্তি কোনটি?",
+                options: [
+                    { text: "A. আত্মবিশ্বাস ও লিডারশিপ", scores: { leadership: 3, entrepreneur: 1 } },
+                    { text: "B. সত্য ও গভীর জ্ঞান অর্জন", scores: { thinker: 3, creative: 1 } },
+                    { text: "C. ভালোবাসা ও মানুষের পাশে থাকা", scores: { caring: 3, energetic: 1 } },
+                    { text: "D. স্বাধীনতা ও নতুনকে আবিষ্কারের সাহস", scores: { explorer: 3, dreamer: 1 } }
+                ]
+            },
+            {
+                q: "৮. নতুন কোনো প্রজেক্ট শুরু করার সময় আপনার মানসিকতা কেমন থাকে?",
+                options: [
+                    { text: "A. প্রচুর উৎসাহে সঙ্গে সঙ্গে ঝাঁপিয়ে পড়ি", scores: { energetic: 3, explorer: 1 } },
+                    { text: "B. আগে সুন্দর একটি ফুলপ্রুফ প্ল্যান তৈরি করি", scores: { thinker: 3, entrepreneur: 1 } },
+                    { text: "C. বড় কিছু করার স্বপ্নে বিভোর থাকি", scores: { dreamer: 3, creative: 1 } },
+                    { text: "D. সবাইকে সাথে নিয়ে কাজ করার কথা ভাবি", scores: { caring: 3, leadership: 1 } }
+                ]
+            },
+            {
+                q: "৯. আগামী ৫ বছর পর নিজেকে কোন রূপে দেখতে চান?",
+                options: [
+                    { text: "A. একজন সফল উদ্যোক্তা বা কোম্পানির সিইও", scores: { entrepreneur: 3, leadership: 1 } },
+                    { text: "B. একজন আন্তর্জাতিক পথপ্রদর্শক বা ট্রাভেলার", scores: { explorer: 3, dreamer: 1 } },
+                    { text: "C. স্বনামধন্য ও প্রতিভাবান কোনো স্পেশালিস্ট", scores: { creative: 3, thinker: 1 } },
+                    { text: "D. মানসিকভাবে সুখী ও ভালোবাসায় ঘেরা একজন মানুষ", scores: { caring: 3, energetic: 1 } }
+                ]
+            },
+            {
+                q: "১০. নিজের কোন স্বভাবটিকে আপনি সবচেয়ে বড় প্লাস পয়েন্ট মনে করেন?",
+                options: [
+                    { text: "A. যেকোনো পরিস্থিতিতে নিজেকে মানিয়ে নেওয়ার ক্ষমতা", scores: { explorer: 3, energetic: 1 } },
+                    { text: "B. দারুণ ধৈর্য এবং গভীর চিন্তা করার ক্ষমতা", scores: { thinker: 3, creative: 1 } },
+                    { text: "C. কাজ গুছিয়ে নেতৃত্ব দেওয়ার যোগ্যতা", scores: { leadership: 3, entrepreneur: 1 } },
+                    { text: "D. অদম্য ইচ্ছা শক্তি ও বড় স্বপ্ন দেখার সাহস", scores: { dreamer: 3, caring: 1 } }
+                ]
+            }
+        ];
+
+        /* ==========================================================================
+           RESULT ARCHETYPES & PROFILES (8 Unique Categories)
+           ========================================================================== */
+        const resultArchetypes = {
+            leadership: {
+                title: "👑 আপনি একজন ভবিষ্যৎ নেতা",
+                secretTitle: "The Born Leader",
+                desc: "আপনার মধ্যে সিদ্ধান্ত নেওয়ার দারুণ ক্ষমতা ও মানুষকে সাথে নিয়ে চলার গুণ রয়েছে। আপনি কঠিন পরিস্থিতিতেও ভয় পান না, বরং সামনে থেকে পথ দেখান।",
+                traits: "দৃঢ় মানসিকতা, দায়িত্বশীল ও আত্মবিশ্বাসী",
+                career: "সিইও / প্রশাসক / প্রজেক্ট ম্যানেজার",
+                city: "ঢাকা (গুলশান/ধানমন্ডি)",
+                relation: "সুরক্ষাকারী ও নির্ভরযোগ্য সঙ্গী",
+                funny: "আপনি এখনো সিইও হননি, কিন্তু সিইও হওয়ার আটিটিউড আপনার মধ্যে ১০০% আছে! 😂🔥",
+                motive: (name) => `${name}, আপনার মধ্যে সামনের দিকে এগিয়ে যাওয়ার অসাধারণ শক্তি আছে। একজন সত্যিকারের নেতার সবচেয়ে বড় গুণ হলো ধৈর্য ও দূরদর্শিতা। জীবন অনেক সময় চ্যালেঞ্জ ছুড়ে দেবে, কিন্তু নিজের নেতৃত্বের গুণে আপনি সব বাধা অতিক্রম করতে পারবেন। নিজের ওপর বিশ্বাস রাখুন!`
+            },
+            thinker: {
+                title: "🧠 আপনি একজন গভীর চিন্তাশীল মানুষ",
+                secretTitle: "The Mastermind Thinker",
+                desc: "আপনি যেকোনো বিষয় হুট করে দেখে বিচার করেন না। প্রতিটি বিষয়ের গভীরে যাওয়া, লজিক খোঁজা এবং ঠান্ডা মাথায় নিখুঁত সমাধান বের করা আপনার বড় বৈশিষ্ট্য।",
+                traits: "বিশ্লেষণাত্মক, শান্ত ও বিচক্ষণ",
+                career: "গবেষক / ডাটা সায়েন্টিস্ট / স্ট্র্যাটেজিস্ট",
+                city: "রাজশাহী (শিক্ষানগরী)",
+                relation: "গভীরভাবে অনুধাবনকারী ও বিশ্বস্ত",
+                funny: "আপনি বাইরে চুপ থাকেন, কিন্তু আপনার মাথার ভেতরে ২৪ ঘণ্টা মাস্টারপ্ল্যান চলছে! 🧠😂",
+                motive: (name) => `${name}, আপনার চিন্তাশক্তি আপনার সবচেয়ে বড় সম্পদ। যেকোনো কাজ তাড়াহুড়ো না করে বুঝে শুনে করার যে ক্ষমতা আপনার আছে, তা খুব কম মানুষের থাকে। আপনার এই মেধা ও ধৈর্য আপনাকে অনেক দূর নিয়ে যাবে।`
+            },
+            creative: {
+                title: "🎨 আপনি একজন সৃজনশীল দূরদর্শী",
+                secretTitle: "The Creative Genius",
+                desc: "সাধারণ জিনিসকে অসাধারণ রূপ দেওয়ার অদ্ভুত এক জাদু আছে আপনার ভেতর। আপনার চিন্তাভাবনা ছকবাঁধা নিয়মের বাইরে এবং আপনার রুচি চমৎকার।",
+                traits: "সৃজনশীল, স্বাধীনচেতা ও নান্দনিক",
+                career: "ডিজাইনার / কনটেন্ট ক্রিয়েটর / আর্ট ডিরেক্টর",
+                city: "চট্টগ্রাম (পাহাড় ও সাগরের মেলবন্ধন)",
+                relation: "আবেগপূর্ণ ও সবসময় সারপ্রাইজ দেওয়া সঙ্গী",
+                funny: "আপনার ব্রেন-এ ট্রাফিক জাম চললেও, ধারণার আইডিয়াগুলো কিন্তু অস্থির! 🎨😂",
+                motive: (name) => `${name}, দুনিয়াটা বদলে দেয় তারাই যারা নতুন কিছু সৃষ্টি করতে পারে। আপনার ক্রিয়েটিভিটি আপনার পরিচয়। মানুষ যা ভাবতে পারে না, আপনি তা কল্পনা করতে পারেন। আপনার এই সৃজনশীলতাকে কখনো থামতে দেবেন না!`
+            },
+            explorer: {
+                title: "🌍 আপনি একজন দুঃসাহসী অভিযাত্রী",
+                secretTitle: "The Wild Explorer",
+                desc: "একঘেয়ে জীবন আপনার একদম পছন্দ নয়! নতুন স্থান, নতুন মানুষ এবং নতুন অভিজ্ঞতা আপনাকে টানে। পরিবর্তনকে আপনি আনন্দের সাথে জড়িয়ে নেন।",
+                traits: "সাহসী, অনুসন্ধিৎসু ও কৌতূহলী",
+                career: "ট্যুর গাইড / ফটোগ্রাফার / এনজিও কর্মী",
+                city: "সিলেট (চা বাগান ও ঝরনা)",
+                relation: "উত্তেজনাপূর্ণ ও অ্যাডভেঞ্চার প্রিয়",
+                funny: "Google Maps আপনাকে দেখলেই বলে—আবার কোথায় যাওয়ার প্ল্যান করছেন? 🌍😂",
+                motive: (name) => `${name}, জীবনের আসল সৌন্দর্য লুকিয়ে আছে নতুনকে জানার মধ্যে। আপনার অনুসন্ধিৎসু মনই আপনাকে অনন্য করে তুলেছে। ভয়কে জয় করে এগিয়ে যাওয়ার এই মানসিকতা আপনাকে জীবনের প্রতিটি অধ্যায়ে বিজয়ী করবে।`
+            },
+            entrepreneur: {
+                title: "💼 আপনার মধ্যে উদ্যোক্তার রক্ত প্রবাহিত",
+                secretTitle: "The Visionary Entrepreneur",
+                desc: "সমস্যা দেখলে আপনি অভিযোগ করেন না, বরং কীভাবে সেটাকে সুযোগে রূপান্তর করা যায় তা ভাবেন! আপনার মাথায় সবসময় বিজনেসের নতুন আইডিয়া গিজগিজ করে।",
+                traits: "ঝুঁকি গ্রহণকারী, চটপটে ও দূরদর্শী",
+                career: "উদ্যোক্তা / স্টার্টআপ ফাউন্ডার / ইনভেস্টর",
+                city: "নারায়ণগঞ্জ (বাণিজ্যিক হাব)",
+                relation: "দূরদর্শী ও লক্ষ্যভিত্তিক সঙ্গী",
+                funny: "চা খাইতে খাইতেও আপনি ভাবেন—এই চায়ের দোকানটাকে কীভাবে ফ্র্যাঞ্চাইজি বানানো যায়! 💼💰",
+                motive: (name) => `${name}, স্বপ্ন সবাই দেখে, কিন্তু সেই স্বপ্ন বাস্তবায়নের ঝুঁকি নেওয়ার সাহস সবাই রাখতে পারে না। আপনার মধ্যে সেই সাহসিকতা রয়েছে। বাধা আসবে, কিন্তু আপনার উদ্যোগী মনোভাব আপনাকে একদিন সফলতার শীর্ষে পৌঁছে দেবে।`
+            },
+            caring: {
+                title: "❤️ আপনি একজন অত্যন্ত যত্নশীল মানুষ",
+                secretTitle: "The Empathetic Soul",
+                desc: "আপনার হৃদয়টা স্বর্ণ দিয়ে তৈরি! অন্যের কষ্টে আপনার মন কাঁদে এবং আপন মানুষদের মুখে হাসি ফোটাতে আপনি নিজের সর্বোচ্চ দিয়ে চেষ্টা করেন।",
+                traits: "দয়ালু, অনুভূতিশীল ও বিশ্বস্ত",
+                career: "কাউন্সেলর / চিকিৎসক / শিক্ষক / সমাজসেবক",
+                city: "খুলনা (শান্ত ও প্রাণবন্ত পরিবেশ)",
+                relation: "অত্যন্ত প্রেমময়, বিশ্বস্ত ও খেয়াল রাখা মানুষ",
+                funny: "অন্যের কষ্টে কান্নাকাটি করা বন্ধ করুন, আপনার দয়ায় তো বিশ্ব চলতাছে! ❤️😂",
+                motive: (name) => `${name}, আজকের এই ব্যস্ত পৃথিবীতে আপনার মতো একজন কাইন্ড-হার্টেড মানুষ মেলা ভার। আপনার সহমর্মিতা ও ভালোবাসা চারপাশের মানুষকে শক্তি দেয়। নিজেকে কখনো অবহেলা করবেন না, কারণ আপনি অনেকের অনুপ্রেরণা।`
+            },
+            energetic: {
+                title: "😂 আপনি আড্ডার প্রাণ ও প্রাণবন্ত মানুষ",
+                secretTitle: "The Life of the Party",
+                desc: "আপনি যেখানেই যান না কেন, সেখানকার পরিবেশ হালকা ও আনন্দদায়ক করে তোলেন! গম্ভীর পরিবেশকে এক মুহূর্তে হাসি-খুশিতে ভরিয়ে দেওয়া আপনার সহজাত গুণ।",
+                traits: "মজার, মিশুক ও সামাজিক",
+                career: "ইভেন্ট হোস্ট / পিআর ম্যানেজার / বিনোদন কর্মী",
+                city: "কক্সবাজার (উৎসবে মুখরিত)",
+                relation: "কখনো বোর হতে না দেওয়া হাসিখুশি সঙ্গী",
+                funny: "আপনি ৫ মিনিট চুপ থাকলে আশেপাশের মানুষ আপনার গায়ে হাত দিয়ে দেখে জ্যান্ত আছেন কি না! 😂🎉",
+                motive: (name) => `${name}, আপনার পজিটিভ এনার্জি সংক্রামক! যেকোনো কঠিন পরিস্থিতিতেও মানুষকে হাসাতে পারাটা কোনো সাধারণ ক্ষমতা নয়। আপনার এই প্রাণবন্ততা সারাজীবন ধরে রাখুন, কারণ আপনার হাসিতে অনেকের দিন ভালো হয়ে যায়।`
+            },
+            dreamer: {
+                title: "🔥 আপনি একজন স্বপ্নবাজ মানুষ",
+                secretTitle: "The Unstoppable Dreamer",
+                desc: "আপনার চোখ ভরা বড় বড় স্বপ্ন! সাধারণ কোনো অর্জনে আপনি সন্তুষ্ট নন। আকাশের সমান লক্ষ্য নিয়ে আপনি বেঁচে থাকেন এবং তা সত্যি করার তাগিদ অনুভব করেন।",
+                traits: "উচ্চাকাঙ্ক্ষী, প্র আবেগপ্রবণ ও অদম্য",
+                career: "লেখক / চলচ্চিত্র নির্মাতা / ইনোভেটর",
+                city: "গাজীপুর (ভবিষ্যতের হাব)",
+                relation: "প্রেরণাদায়ী ও স্বপ্নপূরণের সঙ্গী",
+                funny: "আপনার ফিউচার নিয়ে এখনো সিনেমা তৈরি হয়নি... কিন্তু প্লটটা কিন্তু বেশ ইন্টারেস্টিং! 😎🔥",
+                motive: (name) => `${name}, বড় স্বপ্ন দেখার সাহসই হলো যেকোনো মহৎ কাজের প্রথম ধাপ। আপনার অদম্য ইচ্ছা এবং উচ্চাকাঙ্ক্ষা আপনাকে সাধারণ থেকে আলাদা করে তুলেছে। নিজের স্বপ্নের ওপর বিশ্বাস রাখুন, চেষ্টা চালিয়ে যান—জয় আপনার হবেই।`
+            }
+        };
+
+        /* ==========================================================================
+           APP STATE & NAVIGATION
+           ========================================================================== */
+        let currentSection = 'heroSection';
+        let currentQuestionIndex = 0;
+        let selectedOptionIndex = null;
+
+        let userProfile = {
+            name: '',
+            age: '',
+            district: '',
+            ssc: '',
+            hsc: ''
+        };
+
+        let scores = {
+            leadership: 0,
+            thinker: 0,
+            creative: 0,
+            explorer: 0,
+            entrepreneur: 0,
+            caring: 0,
+            energetic: 0,
+            dreamer: 0
+        };
+
+        function goToSection(sectionId) {
+            playClickSound();
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.add('active');
+                currentSection = sectionId;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function openModal() {
+            playClickSound();
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            playClickSound();
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        /* Form Validation & Quiz Setup */
+        function validateAndStartQuiz() {
+            const name = document.getElementById('userName').value.trim();
+            const age = document.getElementById('userAge').value.trim();
+            const district = document.getElementById('userDistrict').value;
+            const ssc = document.getElementById('userSSC').value.trim();
+            const hsc = document.getElementById('userHSC').value.trim();
+
+            let valid = true;
+
+            if (!name) {
+                document.getElementById('nameError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('nameError').style.display = 'none'; }
+
+            if (!age || age < 5 || age > 100) {
+                document.getElementById('ageError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('ageError').style.display = 'none'; }
+
+            if (!district) {
+                document.getElementById('districtError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('districtError').style.display = 'none'; }
+
+            if (!ssc || ssc < 1 || ssc > 5) {
+                document.getElementById('sscError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('sscError').style.display = 'none'; }
+
+            if (!hsc || hsc < 1 || hsc > 5) {
+                document.getElementById('hscError').style.display = 'block';
+                valid = false;
+            } else { document.getElementById('hscError').style.display = 'none'; }
+
+            if (valid) {
+                userProfile = { name, age, district, ssc, hsc };
+                currentQuestionIndex = 0;
+                resetScores();
+                loadQuestion(0);
+                goToSection('quizSection');
+            }
+        }
+
+        function resetScores() {
+            for (let key in scores) scores[key] = 0;
+        }
+
+        /* ==========================================================================
+           QUIZ ENGINE
+           ========================================================================== */
+        function loadQuestion(index) {
+            selectedOptionIndex = null;
+            document.getElementById('nextQuestionBtn').disabled = true;
+
+            const qData = questions[index];
+            document.getElementById('questionProgressText').textContent = `প্রশ্ন ${index + 1} / ${questions.length}`;
+            
+            const percent = Math.round(((index + 1) / questions.length) * 100);
+            document.getElementById('questionPercentText').textContent = `${percent}%`;
+            document.getElementById('progressBarFill').style.width = `${percent}%`;
+
+            document.getElementById('questionText').textContent = qData.q;
+
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            qData.options.forEach((opt, idx) => {
+                const card = document.createElement('div');
+                card.className = 'option-card';
+                card.onclick = () => selectOption(idx);
+                card.innerHTML = `
+                    <span>${opt.text}</span>
+                    <div class="option-check" id="check-${idx}">✓</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(idx) {
+            playClickSound();
+            selectedOptionIndex = idx;
+            const cards = document.querySelectorAll('.option-card');
+            cards.forEach((c, i) => {
+                if (i === idx) {
+                    c.classList.add('selected');
+                } else {
+                    c.classList.remove('selected');
+                }
+            });
+            document.getElementById('nextQuestionBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedOptionIndex === null) return;
+
+            // Apply Scores
+            const qData = questions[currentQuestionIndex];
+            const chosen = qData.options[selectedOptionIndex];
+            for (let cat in chosen.scores) {
+                if (scores.hasOwnProperty(cat)) {
+                    scores[cat] += chosen.scores[cat];
+                }
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion(currentQuestionIndex);
+            } else {
+                startAnalyzing();
+            }
+        }
+
+        /* ==========================================================================
+           ANALYSIS & RESULT GENERATION
+           ========================================================================== */
+        function startAnalyzing() {
+            goToSection('analyzingSection');
+            let count = 0;
+            const percentEl = document.getElementById('analyzePercent');
+
+            const interval = setInterval(() => {
+                count += 4;
+                if (count > 100) count = 100;
+                percentEl.textContent = `${count}%`;
+
+                if (count >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showResults();
+                    }, 400);
+                }
+            }, 80);
+        }
+
+        function calculateHighestCategory() {
+            let maxScore = -1;
+            let highestCat = 'dreamer';
+            for (let cat in scores) {
+                if (scores[cat] > maxScore) {
+                    maxScore = scores[cat];
+                    highestCat = cat;
+                }
+            }
+            return highestCat;
+        }
+
+        function showResults() {
+            const topCat = calculateHighestCategory();
+            const archetype = resultArchetypes[topCat] || resultArchetypes.dreamer;
+
+            // Trigger Success Audio & Confetti
+            playSuccessSound();
+            launchConfetti();
+
+            // Populate Main Result Details
+            document.getElementById('resultUserGreeting').textContent = `${userProfile.name}, আপনার personality analysis complete!`;
+            document.getElementById('resultTitle').textContent = archetype.title;
+            document.getElementById('resultDescription').textContent = archetype.desc;
+
+            // Populate Info Grid
+            document.getElementById('resName').textContent = userProfile.name;
+            document.getElementById('resAge').textContent = `${userProfile.age} বছর`;
+            document.getElementById('resDistrict').textContent = userProfile.district;
+            document.getElementById('resGPA').textContent = `${userProfile.ssc} / ${userProfile.hsc}`;
+
+            // Populate Traits
+            document.getElementById('resTraits').textContent = archetype.traits;
+            document.getElementById('resCareer').textContent = archetype.career;
+            document.getElementById('resCity').textContent = archetype.city;
+            document.getElementById('resRelation').textContent = archetype.relation;
+
+            // Populate Motivational Message
+            document.getElementById('motoTitle').textContent = `${userProfile.name}, আপনার জন্য একটি বিশেষ কথা`;
+            document.getElementById('motoText').textContent = archetype.motive(userProfile.name);
+
+            // Populate Funny Quote
+            document.getElementById('funnyLineText').textContent = archetype.funny;
+
+            // Populate Vibe Stats
+            renderVibeBreakdown(topCat);
+
+            // Populate Certificate Preview Text
+            document.getElementById('certName').textContent = userProfile.name;
+            document.getElementById('certTitle').textContent = archetype.title;
+            document.getElementById('certDistrict').textContent = userProfile.district;
+            
+            // Total calculated score percentage
+            const totalScoreVal = Math.min(98, Math.max(78, 70 + (scores[topCat] * 2)));
+            document.getElementById('certVibe').textContent = totalScoreVal;
+            document.getElementById('totalVibeScore').textContent = totalScoreVal;
+
+            goToSection('resultSection');
+        }
+
+        function renderVibeBreakdown(topCat) {
+            const container = document.getElementById('vibeStatsContainer');
+            container.innerHTML = '';
+
+            const statsList = [
+                { name: "নেতৃত্ব ও ব্যক্তিত্ব", cat: "leadership" },
+                { name: "সৃজনশীলতা ও বুদ্ধি", cat: "creative" },
+                { name: "বিশ্লেষণ ও চিন্তা", cat: "thinker" },
+                { name: "সাহসিকতা ও অভিযান", cat: "explorer" },
+                { name: "আত্মবিশ্বাস ও পজিটিভিটি", cat: "dreamer" }
+            ];
+
+            statsList.forEach(item => {
+                const rawScore = scores[item.cat] || 2;
+                const percent = Math.min(96, Math.max(65, 60 + (rawScore * 7)));
+
+                const row = document.createElement('div');
+                row.className = 'vibe-stat-row';
+                row.innerHTML = `
+                    <div class="vibe-stat-header">
+                        <span>${item.name}</span>
+                        <span style="color:#00f298; font-weight:700;">${percent}%</span>
+                    </div>
+                    <div class="vibe-bar-bg">
+                        <div class="vibe-bar-fill" style="width: ${percent}%; background: linear-gradient(90deg, #00a86b 0%, #00f298 100%);"></div>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        /* ==========================================================================
+           CANVAS CERTIFICATE GENERATOR (Pure Vanilla JS - PNG Output)
+           ========================================================================== */
+        function downloadCertificate() {
+            playClickSound();
+            const canvas = document.getElementById('cert-canvas');
+            const ctx = canvas.getContext('2d');
+            const W = canvas.width;
+            const H = canvas.height;
+
+            // 1. Dark Navy Background
+            ctx.fillStyle = "#070a13";
+            ctx.fillRect(0, 0, W, H);
+
+            // 2. Soft Gradient Overlay
+            const grad = ctx.createRadialGradient(W/2, H/2, 50, W/2, H/2, 500);
+            grad.addColorStop(0, "rgba(0, 168, 107, 0.2)");
+            grad.addColorStop(0.7, "rgba(255, 59, 92, 0.1)");
+            grad.addColorStop(1, "rgba(7, 10, 19, 0.95)");
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+
+            // 3. Gold Outer & Inner Border
+            ctx.strokeStyle = "#ffd700";
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, W - 40, H - 40);
+
+            ctx.strokeStyle = "rgba(255, 215, 0, 0.4)";
+            ctx.lineWidth = 2;
+            ctx.strokeRect(32, 32, W - 64, H - 64);
+
+            // Decorative Corner Accents
+            ctx.fillStyle = "#ffd700";
+            ctx.fillRect(20, 20, 30, 30);
+            ctx.fillRect(W - 50, 20, 30, 30);
+            ctx.fillRect(20, H - 50, 30, 30);
+            ctx.fillRect(W - 50, H - 50, 30, 30);
+
+            // 4. Header Text
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#00f298";
+            ctx.font = "bold 22px 'Hind Siliguri', sans-serif";
+            ctx.fillText("🇧🇩 আমি কেমন? — VERIFIED FUN QUIZ RESULT", W / 2, 85);
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 38px 'Hind Siliguri', sans-serif";
+            ctx.fillText("PERSONALITY CERTIFICATE", W / 2, 135);
+
+            ctx.fillStyle = "#94a3b8";
+            ctx.font = "20px 'Hind Siliguri', sans-serif";
+            ctx.fillText("এই সার্টিফিকেটটি সম্মানপ্রদর্শনপূর্বক প্রদান করা হলো", W / 2, 175);
+
+            // 5. User Name
+            ctx.fillStyle = "#ffd700";
+            ctx.font = "bold 52px 'Hind Siliguri', sans-serif";
+            ctx.fillText(userProfile.name, W / 2, 245);
+
+            // Underline
+            ctx.strokeStyle = "#00a86b";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(W/2 - 150, 260);
+            ctx.lineTo(W/2 + 150, 260);
+            ctx.stroke();
+
+            // 6. Personality Archetype Title
+            const topCat = calculateHighestCategory();
+            const archetype = resultArchetypes[topCat] || resultArchetypes.dreamer;
+
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "22px 'Hind Siliguri', sans-serif";
+            ctx.fillText("আপনার বিশ্লেষণকৃত ব্যক্তিত্বের টাইটেল:", W / 2, 310);
+
+            ctx.fillStyle = "#00f298";
+            ctx.font = "bold 36px 'Hind Siliguri', sans-serif";
+            ctx.fillText(archetype.title, W / 2, 360);
+
+            // 7. Profile Meta Details Box
+            ctx.fillStyle = "rgba(255, 255, 255, 0.05)";
+            ctx.fillRect(W/2 - 350, 400, 700, 100);
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+            ctx.lineWidth = 1;
+            ctx.strokeRect(W/2 - 350, 400, 700, 100);
+
+            ctx.fillStyle = "#cbd5e1";
+            ctx.font = "20px 'Hind Siliguri', sans-serif";
+            ctx.fillText(`বয়স: ${userProfile.age} বছর   |   জেলা: ${userProfile.district}   |   GPA: ${userProfile.ssc} / ${userProfile.hsc}`, W / 2, 440);
+
+            const vibeScore = document.getElementById('certVibe').textContent;
+            ctx.fillStyle = "#ffd700";
+            ctx.font = "bold 22px 'Hind Siliguri', sans-serif";
+            ctx.fillText(`Vibe Score: ${vibeScore}/100   •   Secret Title: ${archetype.secretTitle}`, W / 2, 475);
+
+            // 8. Seal Illustration
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(W / 2, 575, 40, 0, Math.PI * 2);
+            ctx.fillStyle = "#ffd700";
+            ctx.fill();
+            ctx.shadowColor = "rgba(255, 215, 0, 0.5)";
+            ctx.shadowBlur = 15;
+            ctx.restore();
+
+            ctx.fillStyle = "#000000";
+            ctx.font = "bold 14px 'Outfit', sans-serif";
+            ctx.fillText("VERIFIED", W / 2, 572);
+            ctx.font = "bold 10px 'Outfit', sans-serif";
+            ctx.fillText("RESULT", W / 2, 585);
+
+            // 9. Disclaimer Footer
+            ctx.fillStyle = "#64748b";
+            ctx.font = "14px 'Hind Siliguri', sans-serif";
+            ctx.fillText("এই সার্টিফিকেটটি শুধুমাত্র বিনোদনের উদ্দেশ্যে তৈরি। © আমি কেমন? 🇧🇩", W / 2, 655);
+
+            // 10. Trigger Download
+            setTimeout(() => {
+                const link = document.createElement('a');
+                const cleanName = userProfile.name.toLowerCase().replace(/\s+/g, '-');
+                link.download = `ami-kemon-${cleanName}-certificate.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }, 100);
+        }
+
+        /* ==========================================================================
+           SHARE & RESTART SYSTEM
+           ========================================================================== */
+        function shareResult() {
+            playClickSound();
+            const topCat = calculateHighestCategory();
+            const archetype = resultArchetypes[topCat] || resultArchetypes.dreamer;
+            const vibeScore = document.getElementById('certVibe').textContent;
+
+            const shareText = `আমি কেমন? 🇧🇩\n\nআমার Personality Result:\n${archetype.title}\nSecret Title: ${archetype.secretTitle}\nVibe Score: ${vibeScore}/100\n\nতোমার Result কী? এখনই কুইজ খেলে জেনে নাও! 😎✨`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'আমি কেমন? 🇧🇩',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(err => console.log(err));
+            } else {
+                // Clipboard Fallback using document.execCommand
+                const tempTextArea = document.createElement('textarea');
+                tempTextArea.value = shareText;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('আপনার Result সম্পর্কিত লেখাটি কপি করা হয়েছে! এখন যেকোনো সোশ্যাল মিডিয়ায় শেয়ার করুন। 🚀');
+                } catch (e) {
+                    alert('কপি করা সম্ভব হয়নি।');
+                }
+                document.body.removeChild(tempTextArea);
+            }
+        }
+
+        function restartQuiz() {
+            playClickSound();
+            document.getElementById('userName').value = '';
+            document.getElementById('userAge').value = '';
+            document.getElementById('userDistrict').selectedIndex = 0;
+            document.getElementById('userSSC').value = '';
+            document.getElementById('userHSC').value = '';
+
+            currentQuestionIndex = 0;
+            resetScores();
+            goToSection('heroSection');
+        }
+
+        /* ==========================================================================
+           CONFETTI ENGINE (Pure Canvas)
+           ========================================================================== */
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const pieces = [];
+            const colors = ['#00a86b', '#ff3b5c', '#ffd700', '#00f298', '#ffffff'];
+
+            for (let i = 0; i < 80; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speedY: Math.random() * 3 + 2,
+                    speedX: Math.random() * 2 - 1,
+                    rotation: Math.random() * 360
+                });
+            }
+
+            let animationFrame;
+            let timer = 0;
+
+            function updateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.rotation += 2;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+
+                timer++;
+                if (timer < 180) { // Render for ~3 seconds
+                    animationFrame = requestAnimationFrame(updateConfetti);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    cancelAnimationFrame(animationFrame);
+                }
+            }
+
+            updateConfetti();
+        }
+
+        window.onload = function () {
+            populateDistricts();
+        };
+    </script>
+</body>
+</html>
